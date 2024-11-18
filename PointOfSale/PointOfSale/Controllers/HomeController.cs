@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PointOfSale.Models;
 using System.Diagnostics;
-
+//Edit for test
 namespace PointOfSale.Controllers
 {
     [Authorize]
