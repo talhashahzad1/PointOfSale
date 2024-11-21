@@ -36,7 +36,14 @@ namespace PointOfSale.Utilities.ViewComponents
 
                 User user_found = await _userService.GetById(IdUser);
 
-                photoUser = Convert.ToBase64String(user_found.Photo);
+                if (user_found.Photo != null && user_found.Photo.Length > 0)
+                {
+                    photoUser = Convert.ToBase64String(user_found.Photo);
+                }
+                else
+                {
+                    photoUser = string.Empty;
+                }
 
                 emailUser = ((ClaimsIdentity)claimuser.Identity).FindFirst("Email").Value;
             }
