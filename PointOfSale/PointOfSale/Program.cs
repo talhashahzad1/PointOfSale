@@ -6,6 +6,7 @@ using PointOfSale.Business.Contracts;
 using PointOfSale.Business.Services;
 using PointOfSale.Data.DBContext;
 using PointOfSale.Data.Repository;
+using PointOfSale.Services;
 using PointOfSale.Utilities.Automapper;
 using PointOfSale.Utilities.Extensions;
 
@@ -39,6 +40,7 @@ builder.Services.AddScoped<ITypeDocumentSaleService, TypeDocumentSaleService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IDashBoardService, DashBoardService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
 
 var context = new CustomAssemblyLoadContext();
 context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "Utilities/LibraryPDF/libwkhtmltox.dll"));

@@ -29,6 +29,8 @@ namespace PointOfSale.Data.DBContext
         public virtual DbSet<TypeDocumentSale> TypeDocumentSales { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
+        public virtual DbSet<Supplier> Supplier { get; set; } = null!; 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
@@ -442,6 +444,27 @@ namespace PointOfSale.Data.DBContext
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.IdRol)
                     .HasConstraintName("FK__Users__idRol__1BFD2C07");
+            });
+            modelBuilder.Entity<Supplier>(entity =>
+            {
+                entity.HasKey(e => e.Supplier_Id)
+                    .HasName("PK__Supplier__32585DF57C5D81BB");
+
+                entity.ToTable("Supplier");
+
+                entity.Property(e => e.Supplier_Id)
+                    .HasColumnName("Supplier_Id")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Supplier_Name)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("Supplier_Name");
+
+                entity.Property(e => e.Supplier_Address)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Supplier_Address");
             });
 
             OnModelCreatingPartial(modelBuilder);
