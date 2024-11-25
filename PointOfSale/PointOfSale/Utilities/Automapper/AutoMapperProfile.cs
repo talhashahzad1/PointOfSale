@@ -210,6 +210,29 @@ namespace PointOfSale.Utilities.Automapper
                 destiny.SubMenus,
                 opt => opt.MapFrom(source => source.InverseIdMenuParentNavigation));
             #endregion Menu
+            #region Supplier
+            CreateMap<Supplier, VMSupplier>()
+                .ForMember(destiny =>
+                    destiny.Supplier_Id,
+                    opt => opt.MapFrom(source => source.Supplier_Id)) // Map SupplierId
+                .ForMember(destiny =>
+                    destiny.Supplier_Name,
+                    opt => opt.MapFrom(source => source.Supplier_Name)) // Map Name
+                .ForMember(destiny =>
+                    destiny.Supplier_Address,
+                    opt => opt.MapFrom(source => source.Supplier_Address)); // Map Address
+
+            CreateMap<VMSupplier, Supplier>()
+                .ForMember(destiny =>
+                    destiny.Supplier_Id,
+                    opt => opt.MapFrom(source => source.Supplier_Id)) // Reverse map SupplierId
+                .ForMember(destiny =>
+                    destiny.Supplier_Name,
+                    opt => opt.MapFrom(source => source.Supplier_Name)) // Reverse map Name
+                .ForMember(destiny =>
+                    destiny.Supplier_Address,
+                    opt => opt.MapFrom(source => source.Supplier_Address)); // Reverse map Address
+            #endregion
         }
     }
 }

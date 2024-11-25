@@ -1,0 +1,45 @@
+﻿@model PointOfSale.Models.VMSupplier
+
+<form asp-action="SaveSuppliers" method="post" id="supplierForm">
+    @if (Model.Supplier_Id > 0)
+    {
+        <input type="hidden" asp-for="Supplier_Id" />
+    }
+
+    <div class="form-group">
+        <label asp-for="Supplier_Name">Supplier Name</label>
+        <input asp-for="Supplier_Name" class="form-control" />
+        <span asp-validation-for="Supplier_Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Supplier_Address">Supplier Address</label>
+        <input asp-for="Supplier_Address" class="form-control" />
+        <span asp-validation-for="Supplier_Address" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<script>
+    $(document).on('submit', '#supplierForm', function (e) {
+        e.preventDefault();
+        const form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            method: form.attr('method'),
+            data: form.serialize(),
+            success: function (response) {
+                if (response.success) {
+                    $('#supplierModal').modal('hide'); 
+                    location.reload(); 
+                } else {
+                    $('#supplierModalContent').html(response); 
+                }
+            },
+            error: function () {
+                alert('An error occurred. Please try again.');
+            }
+        });
+    });
+</script>
