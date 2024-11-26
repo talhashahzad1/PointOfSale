@@ -140,3 +140,14 @@ telefono varchar(50),
 porcentajeImpuesto decimal(10,2),
 simboloMoneda varchar(5)
 )
+go
+CREATE TABLE [dbo].[Supplier](
+	[Supplier_Id] [int] IDENTITY(1,1) NOT NULL,
+	[Supplier_Name] [nvarchar](100) NULL,
+	[Supplier_Address] [nvarchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Supplier_Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO

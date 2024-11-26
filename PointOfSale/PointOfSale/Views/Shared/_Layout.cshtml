@@ -146,7 +146,27 @@
                     </div>
                   </ul>
                 </li>*@
+
                 @await Component.InvokeAsync("Menu")
+                        <li class="has-sub">
+                            <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#suppliers-menu"
+                               aria-expanded="false" aria-controls="suppliers-menu">
+                                <i class="mdi mdi-truck"></i>
+                                <span class="nav-text">Suppliers</span> <b class="caret"></b>
+                            </a>
+
+                            <ul class="collapse" id="suppliers-menu" data-parent="#sidebar-menu">
+                                <div class="sub-menu">
+                                <li class="">
+                                    <a class="sidenav-item-link" href="@Url.Action("GetSuppliers", "Supplier")">
+                                        <span class="nav-text">Your Suppliers</span>
+                                    </a>
+                                </li>
+                </div>
+                </ul>
+                </li>
+
+
               </ul>
             </div>
 
@@ -222,6 +242,15 @@
     <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/sleek.js"></script>
     <script src="~/plugins/sweetalert/sweetalert.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS (needs jQuery to function properly) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Optional: Popper.js for Bootstrap tooltips, popovers, etc. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+
 
     
 	<script src="~/plugins/toastr/toastr.min.js"></script>
