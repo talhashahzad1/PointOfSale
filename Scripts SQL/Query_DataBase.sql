@@ -151,3 +151,55 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+USE [POINTOFSALE]
+GO
+
+/****** Object:  Table [dbo].[Purchase]    Script Date: 29/11/2024 15:55:48 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Purchase](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[P_Supplier_Name] [nvarchar](100) NULL,
+	[Product_Name] [nvarchar](100) NULL,
+	[Purchase_price] [decimal](10, 2) NULL,
+	[Quantity] [int] NULL,
+	[Supplier_Id] [int] NULL,
+	[Product_Id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Purchase]  WITH CHECK ADD  CONSTRAINT [FK_Purchase_Product] FOREIGN KEY([Product_Id])
+REFERENCES [dbo].[Product] ([idProduct])
+GO
+
+ALTER TABLE [dbo].[Purchase] CHECK CONSTRAINT [FK_Purchase_Product]
+GO
+
+ALTER TABLE [dbo].[Purchase]  WITH CHECK ADD  CONSTRAINT [FK_Purchase_Supplier] FOREIGN KEY([Supplier_Id])
+REFERENCES [dbo].[Supplier] ([Supplier_Id])
+GO
+
+ALTER TABLE [dbo].[Purchase] CHECK CONSTRAINT [FK_Purchase_Supplier]
+GO
+
+CREATE TRIGGER UpdateProductQuantity
+ON Purchase
+AFTER INSERT
+AS
+BEGIN
+    UPDATE Product
+    SET Product.Quantity = Product.Quantity + inserted.Quantity
+    FROM Product
+    INNER JOIN inserted ON Product.idProduct = inserted.Product_Id;
+END;
+;
+
+
