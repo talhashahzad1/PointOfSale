@@ -17,5 +17,6 @@ namespace PointOfSale.Model
         public DateTime? RegistrationDate { get; set; }
 
         public virtual Category? IdCategoryNavigation { get; set; }
+        public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
     }
 }

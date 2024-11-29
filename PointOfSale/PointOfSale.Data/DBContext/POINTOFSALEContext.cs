@@ -30,6 +30,7 @@ namespace PointOfSale.Data.DBContext
         public virtual DbSet<User> Users { get; set; } = null!;
 
         public virtual DbSet<Supplier> Supplier { get; set; } = null!; 
+        public virtual DbSet<Purchase> Purchase { get; set; }=null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -466,6 +467,54 @@ namespace PointOfSale.Data.DBContext
                     .IsUnicode(false)
                     .HasColumnName("Supplier_Address");
             });
+            modelBuilder.Entity<Purchase>(entity =>
+            {
+                entity.HasKey(e => e.id)
+                    .HasName("PK__Purchase__3213E83F12345678"); // Replace with actual constraint name if required.
+
+                entity.ToTable("Purchase");
+
+                entity.Property(e => e.id).HasColumnName("id");
+
+                entity.Property(e => e.P_Supplier_Name)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("P_Supplier_Name");
+
+                //entity.Property(e => e.P_Supplier_Address)
+                //    .HasMaxLength(255)
+                //    .IsUnicode(false)
+                //    .HasColumnName("P_Supplier_Address");
+
+                entity.Property(e => e.Product_Name)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("Product_Name");
+
+                entity.Property(e => e.Purchase_Price)
+                    .HasColumnType("decimal(10, 2)")
+                    .HasColumnName("Purchase_Price");
+
+                entity.Property(e => e.Quantity)
+                    .HasColumnName("Quantity");
+
+                entity.Property(e => e.Supplier_Id)
+                    .HasColumnName("Supplier_Id");
+
+                entity.Property(e => e.Product_Id)
+                    .HasColumnName("Product_Id");
+
+                entity.HasOne(d => d.Supplier)
+                    .WithMany(p => p.Purchases)
+                    .HasForeignKey(d => d.Supplier_Id)
+                    .HasConstraintName("FK__Purchase__Supplier_Id__12345678");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Purchases)
+                    .HasForeignKey(d => d.Product_Id)
+                    .HasConstraintName("FK__Purchase__Product_Id__87654321");
+            });
+
 
             OnModelCreatingPartial(modelBuilder);
         }

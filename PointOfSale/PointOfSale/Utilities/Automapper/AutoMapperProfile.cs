@@ -214,24 +214,45 @@ namespace PointOfSale.Utilities.Automapper
             CreateMap<Supplier, VMSupplier>()
                 .ForMember(destiny =>
                     destiny.Supplier_Id,
-                    opt => opt.MapFrom(source => source.Supplier_Id)) // Map SupplierId
+                    opt => opt.MapFrom(source => source.Supplier_Id)) 
                 .ForMember(destiny =>
                     destiny.Supplier_Name,
-                    opt => opt.MapFrom(source => source.Supplier_Name)) // Map Name
+                    opt => opt.MapFrom(source => source.Supplier_Name)) 
                 .ForMember(destiny =>
                     destiny.Supplier_Address,
-                    opt => opt.MapFrom(source => source.Supplier_Address)); // Map Address
+                    opt => opt.MapFrom(source => source.Supplier_Address)); 
 
             CreateMap<VMSupplier, Supplier>()
                 .ForMember(destiny =>
                     destiny.Supplier_Id,
-                    opt => opt.MapFrom(source => source.Supplier_Id)) // Reverse map SupplierId
+                    opt => opt.MapFrom(source => source.Supplier_Id)) 
                 .ForMember(destiny =>
                     destiny.Supplier_Name,
-                    opt => opt.MapFrom(source => source.Supplier_Name)) // Reverse map Name
+                    opt => opt.MapFrom(source => source.Supplier_Name)) 
                 .ForMember(destiny =>
                     destiny.Supplier_Address,
-                    opt => opt.MapFrom(source => source.Supplier_Address)); // Reverse map Address
+                    opt => opt.MapFrom(source => source.Supplier_Address));
+            #endregion
+            #region
+            CreateMap<Purchase, VMPurchase>()
+                .ForMember(destiny => destiny.Id, opt => opt.MapFrom(source => source.id))
+                .ForMember(destiny => destiny.SupplierName, opt => opt.MapFrom(source => source.P_Supplier_Name))
+                //.ForMember(destiny => destiny.SupplierAddress, opt => opt.MapFrom(source => source.P_Supplier_Address))
+                .ForMember(destiny => destiny.ProductName, opt => opt.MapFrom(source => source.Product_Name))
+                .ForMember(destiny => destiny.PurchasePrice, opt => opt.MapFrom(source => source.Purchase_Price))
+                .ForMember(destiny => destiny.Quantity, opt => opt.MapFrom(source => source.Quantity))
+                .ForMember(destiny => destiny.SupplierId, opt => opt.MapFrom(source => source.Supplier_Id))
+                .ForMember(destiny => destiny.ProductId, opt => opt.MapFrom(source => source.Product_Id));
+
+            CreateMap<VMPurchase, Purchase>()
+                .ForMember(destiny => destiny.id, opt => opt.MapFrom(source => source.Id))
+                .ForMember(destiny => destiny.P_Supplier_Name, opt => opt.MapFrom(source => source.SupplierName))
+                //.ForMember(destiny => destiny.P_Supplier_Address, opt => opt.MapFrom(source => source.SupplierAddress))
+                .ForMember(destiny => destiny.Product_Name, opt => opt.MapFrom(source => source.ProductName))
+                .ForMember(destiny => destiny.Purchase_Price, opt => opt.MapFrom(source => source.PurchasePrice))
+                .ForMember(destiny => destiny.Quantity, opt => opt.MapFrom(source => source.Quantity))
+                .ForMember(destiny => destiny.Supplier_Id, opt => opt.MapFrom(source => source.SupplierId))
+                .ForMember(destiny => destiny.Product_Id, opt => opt.MapFrom(source => source.ProductId));
             #endregion
         }
     }

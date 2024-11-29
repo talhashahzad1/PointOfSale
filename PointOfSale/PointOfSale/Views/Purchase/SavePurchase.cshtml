@@ -1,0 +1,107 @@
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+@model PointOfSale.Models.VMPurchase
+
+<form asp-action="SavePurchase" method="post" id="purchaseForm">
+    @if (Model.Id > 0)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+
+    <input type="hidden" asp-for="ProductName" id="ProductName" />
+    <input type="hidden" asp-for="SupplierName" id="SupplierName" />
+    @* <input type="hidden" asp-for="SupplierAddress" id="SupplierAddress" /> *@
+
+    <div class="form-group">
+        <label asp-for="SupplierId">Supplier</label>
+        <select asp-for="SupplierId" class="form-control" id="SupplierDropdown">
+            <option value="">-- Select Supplier --</option>
+            @foreach (var supplier in ViewBag.Suppliers as IEnumerable<SelectListItem>)
+            {
+                <option value="@supplier.Value" data-name="@supplier.Text" selected="@(supplier.Value == Model.SupplierId.ToString())">
+                    @supplier.Text
+                </option>
+            }
+        </select>
+        <span asp-validation-for="SupplierId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProductId">Product</label>
+        <select asp-for="ProductId" class="form-control" id="ProductDropdown">
+            <option value="">-- Select Product --</option>
+            @foreach (var product in ViewBag.Products as IEnumerable<SelectListItem>)
+            {
+                <option value="@product.Value" data-name="@product.Text" selected="@(product.Value == Model.ProductId.ToString())">
+                    @product.Text
+                </option>
+            }
+        </select>
+        <span asp-validation-for="ProductId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Quantity">Quantity</label>
+        <input asp-for="Quantity" type="number" class="form-control" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PurchasePrice">Purchase Price</label>
+        <input asp-for="PurchasePrice" type="number" class="form-control" />
+        <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<script>
+    $(document).ready(function () {
+        // When Supplier or Product is selected, populate the hidden fields
+        $('#SupplierDropdown').on('change', function () {
+            const selectedSupplier = $(this).find('option:selected');
+            $('#SupplierName').val(selectedSupplier.data('name'));
+            // $('#SupplierAddress').val(selectedSupplier.data('address')); 
+        });
+
+        $('#ProductDropdown').on('change', function () {
+            const selectedProduct = $(this).find('option:selected');
+            $('#ProductName').val(selectedProduct.data('name'));
+        });
+
+        // Trigger change event on page load to prepopulate values if any
+        $('#SupplierDropdown').trigger('change');
+        $('#ProductDropdown').trigger('change');
+    });
+
+           $(document).on('submit', '#purchaseForm', function (e) {
+        e.preventDefault();
+
+        const form = $(this);
+        const formData = {};
+        form.serializeArray().forEach(field => {
+            formData[field.name] = field.value;
+        });
+
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function (response) {
+                if (response.success) {
+                    $('#purchaseModal').modal('hide');
+                    location.reload();
+                } else {
+                    $('#purchaseModalContent').html(response);
+                    $('#purchaseModal').modal('show');
+                }
+            },
+            error: function () {
+                alert('An error occurred. Please try again.');
+            }
+        });
+    });
+
+
+</script>
