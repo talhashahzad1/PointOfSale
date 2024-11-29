@@ -16,6 +16,7 @@ namespace PointOfSale.Data.Repository
         {
             _dbcontext = context;
         }
+        public POINTOFSALEContext Context => _dbcontext;
         public async Task<TEntity> Get(Expression<Func<TEntity, bool>> filter)
         {
             try
